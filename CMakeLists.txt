@@ -9,7 +9,7 @@ project(PDFHummus VERSION 4.5.8)
 option(USE_BUNDLED  "Whether to use bundled libraries" TRUE)
 option(USE_UNBUNDLED_FALLBACK_BUNDLED  "When USE_BUNDLED is false and a certain system library is not available should fallback on bundled lib")
 option(PDFHUMMUS_NO_DCT  "Whether to drop support for DCT streams parsing (will not use LibJpeg)")
-option(PDFHUMMUS_NO_TIFF "Whether to drop TIFF Images support (will not use LibTiff)" )
+option(PDFHUMMUS_NO_TIFF "Whether to drop TIFF Images support (will not use LibTiff)" TRUE)
 option(PDFHUMMUS_NO_PNG "Whether to drop PNG Images support (will not use LibPng)" )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
