@@ -55,6 +55,7 @@ Downloads
 
 # notes etc.
 etc
+/.vs
 
 #vscode unwanted#
 .vscode/compile_commands.json
@@ -62,3 +63,4 @@ etc
 #xmake unwanted#
 ################
 .xmake
+
