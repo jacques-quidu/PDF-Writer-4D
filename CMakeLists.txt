@@ -2,6 +2,7 @@ project(PDFHUMMUS)
 cmake_minimum_required (VERSION 2.8.12)
 
 set(USE_BUNDLED TRUE CACHE BOOL "Whether to use bundled libraries")
+set(PDFHUMMUS_NO_TIFF TRUE CACHE BOOL "This PDF-Writer version for 4D does not contain libtiff")
 
 if(CMAKE_GENERATOR STREQUAL "Xcode")
     set(IS_XCODE TRUE)
