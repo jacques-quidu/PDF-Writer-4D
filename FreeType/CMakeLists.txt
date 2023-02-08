@@ -455,8 +455,9 @@ set_target_properties(
   freetype PROPERTIES
     C_VISIBILITY_PRESET hidden)
 
+#PDFWriter: force system ZLib in order compilation to use parent ZLib 
 target_compile_definitions(
-  freetype PRIVATE FT2_BUILD_LIBRARY)
+  freetype PRIVATE FT2_BUILD_LIBRARY FT_CONFIG_OPTION_SYSTEM_ZLIB)
 
 if (WIN32)
   target_compile_definitions(
@@ -483,6 +484,9 @@ target_include_directories(
     PRIVATE
       ${CMAKE_CURRENT_BINARY_DIR}/include
       ${CMAKE_CURRENT_SOURCE_DIR}/include
+
+	#PDFWriter: use parent zlib for zlib compilation
+	${CMAKE_CURRENT_SOURCE_DIR}/../ZLib
 
       # Make <ftconfig.h> available for builds/unix/ftsystem.c.
       ${CMAKE_CURRENT_BINARY_DIR}/include/freetype/config
