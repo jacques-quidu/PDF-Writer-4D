@@ -282,6 +282,8 @@ void DescendentFontWriter::WriteCharSet(	DictionaryContext* inDescriptorContext,
 	// ignoring input values for now, assuming they are the same as the ones 
 	// used in the font. 
 
+	return; //CIDSet is optional so remove it as it fails PDF/A compatibility if present
+
 	// CIDSet
 	inDescriptorContext->WriteKey(scCIDSet);
 	mCIDSetObjectID = inObjectsContext->GetInDirectObjectsRegistry().AllocateNewObjectID();
