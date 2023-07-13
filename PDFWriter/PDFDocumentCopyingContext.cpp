@@ -90,9 +90,9 @@ EStatusCodeAndObjectIDType PDFDocumentCopyingContext::CreateFormXObjectFromPDFPa
 }
 
 
-EStatusCodeAndObjectIDType PDFDocumentCopyingContext::AppendPDFPageFromPDF(unsigned long inPageIndex)
+EStatusCodeAndObjectIDType PDFDocumentCopyingContext::AppendPDFPageFromPDF(unsigned long inPageIndex, ObjectIDType inTargetObjectID)
 {
-	return mDocumentHandler.AppendPDFPageFromPDF(inPageIndex);
+	return mDocumentHandler.AppendPDFPageFromPDF(inPageIndex, inTargetObjectID);
 }
 
 EStatusCodeAndObjectIDType PDFDocumentCopyingContext::CopyObject(ObjectIDType inSourceObjectID)

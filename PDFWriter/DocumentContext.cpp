@@ -690,18 +690,26 @@ static const std::string scTrimBox = "TrimBox";
 static const std::string scArtBox = "ArtBox";
 static const std::string scContents = "Contents";
 
-EStatusCodeAndObjectIDType DocumentContext::WritePage(PDFPage* inPage)
+EStatusCodeAndObjectIDType DocumentContext::WritePage(PDFPage* inPage, ObjectIDType inTargetObjectID)
 {
 	EStatusCodeAndObjectIDType result;
 
-	result.second = mObjectsContext->StartNewIndirectObject();
-	result.first = (0 == result.second) ? eFailure:eSuccess;
-	if(result.first != PDFHummus::eSuccess)
+	result.first = PDFHummus::eSuccess;
+	if (inTargetObjectID != 0)
 	{
-		TRACE_LOG("DocumentContext::WritePage, failed to start writing page");
-		return result;
+		mObjectsContext->StartNewIndirectObject(inTargetObjectID);
+		result.second = inTargetObjectID;
 	}
-
+	else
+	{
+		result.second = mObjectsContext->StartNewIndirectObject();
+		result.first = (0 == result.second) ? eFailure:eSuccess;
+		if(result.first != PDFHummus::eSuccess)
+		{
+			TRACE_LOG("DocumentContext::WritePage, failed to start writing page");
+			return result;
+		}
+	}
 	DictionaryContext* pageContext = mObjectsContext->StartDictionary();
 
 	// type
