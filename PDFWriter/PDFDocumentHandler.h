@@ -200,7 +200,7 @@ public:
 														 const PDFRectangle& inCropBox,
 														 const double* inTransformationMatrix,
 														ObjectIDType inPredefinedFormId);
-	EStatusCodeAndObjectIDType AppendPDFPageFromPDF(unsigned long inPageIndex);
+	EStatusCodeAndObjectIDType AppendPDFPageFromPDF(unsigned long inPageIndex, ObjectIDType inTargetObjectID = 0);
 	PDFHummus::EStatusCode MergePDFPageToPage(PDFPage* inTargetPage,unsigned long inSourcePageIndex);
     PDFHummus::EStatusCode MergePDFPageToFormXObject(PDFFormXObject* inTargetFormXObject,unsigned long inSourcePageIndex);
 	EStatusCodeAndObjectIDType CopyObject(ObjectIDType inSourceObjectID);
@@ -270,7 +270,7 @@ private:
 	PDFHummus::EStatusCode WriteStreamObject(PDFStreamInput* inStream, IObjectWritePolicy* inWritePolicy);
 
 
-	EStatusCodeAndObjectIDType CreatePDFPageForPage(unsigned long inPageIndex);
+	EStatusCodeAndObjectIDType CreatePDFPageForPage(unsigned long inPageIndex, ObjectIDType inTargetObjectID = 0);
 
 	PDFHummus::EStatusCode CopyPageContentToTargetPagePassthrough(PDFPage* inPage, PDFDictionary* inPageObject);
 	PDFHummus::EStatusCode CopyPageContentToTargetPageRecoded(PDFPage* inPage,PDFDictionary* inPageObject);
