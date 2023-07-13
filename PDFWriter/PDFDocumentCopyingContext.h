@@ -73,7 +73,7 @@ public:
 																const PDFRectangle& inCropBox,
 																const double* inTransformationMatrix = NULL,
 																ObjectIDType inPredefinedFormId = 0);
-	EStatusCodeAndObjectIDType AppendPDFPageFromPDF(unsigned long inPageIndex);
+	EStatusCodeAndObjectIDType AppendPDFPageFromPDF(unsigned long inPageIndex, ObjectIDType inTargetObjectID = 0);
 	PDFHummus::EStatusCode MergePDFPageToPage(PDFPage* inTargetPage,unsigned long inSourcePageIndex);
     
     // MergePDFPageToFormXObject merges a page content into a form xobject.

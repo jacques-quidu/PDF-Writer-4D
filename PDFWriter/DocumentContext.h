@@ -152,7 +152,7 @@ namespace PDFHummus
 		// Determine whether this page already has a content context
 		bool HasContentContext(PDFPage* inPage);
 
-		EStatusCodeAndObjectIDType WritePage(PDFPage* inPage);
+		EStatusCodeAndObjectIDType WritePage(PDFPage* inPage, ObjectIDType inTargetObjectID = 0);
 		EStatusCodeAndObjectIDType WritePageAndRelease(PDFPage* inPage);
 
 		// Use this to add annotation references to a page. the references will be written on the next page write (see WritePage and WritePageAndRelease)

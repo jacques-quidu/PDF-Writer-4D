@@ -755,7 +755,7 @@ EStatusCodeAndObjectIDTypeList PDFDocumentHandler::AppendPDFPagesFromPDFInContex
 	return result;
 }
 
-EStatusCodeAndObjectIDType PDFDocumentHandler::CreatePDFPageForPage(unsigned long inPageIndex)
+EStatusCodeAndObjectIDType PDFDocumentHandler::CreatePDFPageForPage(unsigned long inPageIndex, ObjectIDType inTargetObjectID)
 {
 	RefCountPtr<PDFDictionary> pageObject = mParser->ParsePage(inPageIndex);
 	EStatusCodeAndObjectIDType result;
@@ -810,7 +810,7 @@ EStatusCodeAndObjectIDType PDFDocumentHandler::CreatePDFPageForPage(unsigned lon
 		mDocumentContext->AddDocumentContextExtender(this);
 		mWrittenPage = pageObject.GetPtr();
 
-		result = mDocumentContext->WritePage(&newPage);
+		result = mDocumentContext->WritePage(&newPage, inTargetObjectID);
 		if(result.first != PDFHummus::eSuccess)
 			break;
 
@@ -1093,13 +1093,13 @@ EStatusCodeAndObjectIDType PDFDocumentHandler::CreateFormXObjectFromPDFPage(unsi
 }
 
 
-EStatusCodeAndObjectIDType PDFDocumentHandler::AppendPDFPageFromPDF(unsigned long inPageIndex)
+EStatusCodeAndObjectIDType PDFDocumentHandler::AppendPDFPageFromPDF(unsigned long inPageIndex, ObjectIDType inTargetObjectID)
 {
 	EStatusCodeAndObjectIDType result;
 
 	if(inPageIndex < mParser->GetPagesCount())
 	{
-		result = CreatePDFPageForPage(inPageIndex);
+		result = CreatePDFPageForPage(inPageIndex, inTargetObjectID);
 		if(result.first != PDFHummus::eSuccess)
 			TRACE_LOG1("PDFDocumentHandler::AppendPDFPageFromPDF, failed to append page %ld",inPageIndex);
 	}
