@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 3.19)
 # MINOR is incremented when new symbols are added
 project(PDFHummus VERSION 4.7.0)
 
+# added USE_ZLIB_EXTERNAL for PDFWriter to use shared lib from 4D 
+# if TRUE ZLIB_EXTERNAL_INCLUDE_DIR must be set to the path to external Zlib include directory and USE_BUNDLED equal to TRUE
+option(USE_ZLIB_EXTERNAL "Whether to use external ZLib not build by cmake" FALSE)
 
 option(USE_BUNDLED  "Whether to use bundled libraries" TRUE)
 option(USE_UNBUNDLED_FALLBACK_BUNDLED  "When USE_BUNDLED is false and a certain system library is not available should fallback on bundled lib")
@@ -17,6 +20,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 if(NOT USE_BUNDLED)
     FIND_PACKAGE(PkgConfig)
+
+if (NOT USE_ZLIB_EXTERNAL)
 
     # zlib
     if(USE_UNBUNDLED_FALLBACK_BUNDLED)
@@ -33,6 +38,8 @@ if(NOT USE_BUNDLED)
     if(USING_UNBUNDLED_ZLIB)
         set(PDFHUMMUS_DEPENDS_ZLIB "find_dependency(ZLIB)")
     endif()
+
+endif(NOT USE_ZLIB_EXTERNAL)
 
     # freetype
     if(USE_UNBUNDLED_FALLBACK_BUNDLED)
@@ -149,8 +156,11 @@ if(NOT USE_BUNDLED)
     endif()    
 
 else(NOT USE_BUNDLED)
+
+if (NOT USE_ZLIB_EXTERNAL)
     # zlib
     ADD_SUBDIRECTORY(Zlib)
+endif(NOT USE_ZLIB_EXTERNAL)
 
     # freetype
     ADD_SUBDIRECTORY(FreeType)
@@ -192,7 +202,7 @@ endif(NOT USE_BUNDLED)
 
 ADD_SUBDIRECTORY(PDFWriter)
 
-
+if(NOT USE_ZLIB_EXTERNAL)
 if(PROJECT_IS_TOP_LEVEL AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/PDFWriterTesting)
     # avoid installing the testing lib altogether when included in another project.
     # it's annoying when in parent all, and more annoying to then get the tests added
@@ -204,6 +214,7 @@ if(PROJECT_IS_TOP_LEVEL AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/PDFWriterTesting)
     enable_testing()
     ADD_SUBDIRECTORY(PDFWriterTesting)
 endif()
+endif(NOT USE_ZLIB_EXTERNAL)
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
