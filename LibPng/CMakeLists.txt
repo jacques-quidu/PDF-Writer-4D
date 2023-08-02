@@ -34,6 +34,15 @@ target_include_directories(LibPng
     $<INSTALL_INTERFACE:include/LibPng> 
 )
 
+if(USE_ZLIB_EXTERNAL)
+
+target_include_directories(LibPng
+    PRIVATE
+    ${ZLIB_EXTERNAL_INCLUDE_DIR}	
+)
+
+endif(USE_ZLIB_EXTERNAL)
+
 # https://github.com/julienr/libpng-android/issues/6
 if (${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "aarch64" OR ${CMAKE_HOST_SYSTEM_PROCESSOR} STREQUAL "arm64")
     target_compile_definitions(LibPng PRIVATE 
@@ -45,11 +54,15 @@ if(WIN32 AND BUILD_SHARED_LIBS)
     target_compile_definitions(LibPng PUBLIC PNG_USE_DLL)
 endif()
 
+if(NOT USE_ZLIB_EXTERNAL)
+
 if(USING_UNBUNDLED_ZLIB)
     target_link_libraries(LibPng ZLIB::ZLIB)
 else(USING_UNBUNDLED_ZLIB)
     target_link_libraries(LibPng PDFHummus::Zlib)
 endif(USING_UNBUNDLED_ZLIB)
+
+endif(NOT USE_ZLIB_EXTERNAL)
 
 install(TARGETS LibPng
     EXPORT PDFHummusTargets
