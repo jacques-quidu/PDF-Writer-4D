@@ -357,11 +357,16 @@ XObjectContentContext.h
 add_library(PDFHummus::PDFWriter ALIAS PDFWriter)
 
 # zlib
+
+if(NOT USE_ZLIB_EXTERNAL)
+
 if(USING_UNBUNDLED_ZLIB)
     target_link_libraries(PDFWriter ZLIB::ZLIB)
 else(USING_UNBUNDLED_ZLIB)
     target_link_libraries(PDFWriter PDFHummus::Zlib)
 endif(USING_UNBUNDLED_ZLIB)
+
+endif(NOT USE_ZLIB_EXTERNAL)
 
 # freetype
 if(USING_UNBUNDLED_Freetype)
@@ -416,6 +421,16 @@ target_include_directories(PDFWriter
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
     $<INSTALL_INTERFACE:include/PDFWriter> 
 )  
+
+if(USE_ZLIB_EXTERNAL)
+
+target_include_directories(PDFWriter
+    PRIVATE
+    ${ZLIB_EXTERNAL_INCLUDE_DIR}	
+)
+
+endif(USE_ZLIB_EXTERNAL)
+
 
 set_target_properties(PDFWriter PROPERTIES VERSION ${PDFWRITER_LIB_VERSION} SOVERSION ${PDFWRITER_SO_VERSION})
 if(WIN32 AND BUILD_SHARED_LIBS)

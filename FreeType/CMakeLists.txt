@@ -69,12 +69,17 @@ if (WIN32 AND BUILD_SHARED_LIBS)
 endif ()
 
 # set to use FT_CONFIG_OPTION_SYSTEM_ZLIB...or in other words...another zlib
-target_compile_definitions(FreeType PUBLIC FT2_BUILD_LIBRARY=1 FT_CONFIG_OPTION_SYSTEM_ZLIB=1)   
+target_compile_definitions(FreeType PUBLIC FT2_BUILD_LIBRARY=1 FT_CONFIG_OPTION_SYSTEM_ZLIB=1)
+
+if(NOT USE_ZLIB_EXTERNAL)
+   
 if(USING_UNBUNDLED_ZLIB)
     target_link_libraries(FreeType ZLIB::ZLIB)
 else(USING_UNBUNDLED_ZLIB)
     target_link_libraries(FreeType PDFHummus::Zlib)
 endif(USING_UNBUNDLED_ZLIB)
+
+endif(NOT USE_ZLIB_EXTERNAL)
 
 
 target_include_directories(FreeType
@@ -85,6 +90,15 @@ target_include_directories(FreeType
     ${CMAKE_CURRENT_SOURCE_DIR}/include/freetype/internal
     ${CMAKE_CURRENT_SOURCE_DIR}/include/freetype/internal/services
 )
+
+if(USE_ZLIB_EXTERNAL)
+
+target_include_directories(FreeType
+    PRIVATE
+    ${ZLIB_EXTERNAL_INCLUDE_DIR}	
+)
+
+endif(USE_ZLIB_EXTERNAL)
 
 install(TARGETS FreeType
     EXPORT PDFHummusTargets
