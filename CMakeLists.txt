@@ -14,7 +14,7 @@ option(USE_UNBUNDLED_FALLBACK_BUNDLED  "When USE_BUNDLED is false and a certain 
 option(PDFHUMMUS_NO_DCT  "Whether to drop support for DCT streams parsing (will not use LibJpeg)")
 option(PDFHUMMUS_NO_TIFF "Whether to drop TIFF Images support (will not use LibTiff)" TRUE)
 option(PDFHUMMUS_NO_PNG "Whether to drop PNG Images support (will not use LibPng)" )
-option(PDFHUMMUS_NO_OPENSSL "Whether to drop OpenSSL Usage, and therefore PDF2.0 encryption support (will not allow encryption or decryption of PDF2.0 files)" )
+option(PDFHUMMUS_NO_OPENSSL "Whether to drop OpenSSL Usage, and therefore PDF2.0 encryption support (will not allow encryption or decryption of PDF2.0 files)" TRUE)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
